@@ -1,0 +1,15 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  height: max-content;
+  width: 80%;
+  color: white;
+  background-color: #242424;
+  border: 1px solid #242424;
+  border-radius: 20px;
+  outline: transparent;
+  transition: all 0.3s;
+  cursor: pointer;
+}
