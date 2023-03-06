@@ -7,6 +7,7 @@ export interface IAppContext {
   addProduct: (product: IProduct) => void
   clearProduct: () => void
   addItemToCart: (item: IProduct) => void
+  removeItemFromCart: (id: string) => void
 }
 
 const AppContext = createContext<IAppContext>({
@@ -15,6 +16,7 @@ const AppContext = createContext<IAppContext>({
   addProduct: () => {},
   clearProduct: () => {},
   addItemToCart: () => {},
+  removeItemFromCart: () => {},
 })
 
 export default AppContext

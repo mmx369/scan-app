@@ -17,7 +17,7 @@ export default function HomePage() {
       <Button
         children='Понятно, вперед!'
         typeButton='button'
-        onClick={() => navigate('scan')}
+        onClick={() => navigate('/cart')}
       />
     </div>
   )

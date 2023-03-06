@@ -1,18 +1,34 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
+import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
+import ErrorPage from './pages/Error'
 import HomePage from './pages/HomePage'
 import Product from './pages/Product'
-import ScanPage from './pages/Scan'
+import ProductDetailPage from './pages/ProductDetailPage'
 import Scanning from './pages/Scanning'
 import { AppContextProvider } from './store/AppContextProvider'
 import { GlobalStyle } from './styles/global'
 
 const router = createBrowserRouter([
-  { index: true, element: <HomePage /> },
-  { path: '/scan', element: <ScanPage /> },
-  { path: '/scanning', element: <Scanning /> },
-  { path: '/product', element: <Product /> },
-  // { path: 'cart', element: <Cart /> },
+  {
+    path: '/',
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: 'scanning', element: <Scanning /> },
+      { path: 'product', element: <Product /> },
+      { path: 'checkout', element: <Checkout /> },
+      {
+        path: 'cart',
+        element: <Cart />,
+      },
+      {
+        path: 'cart/:productId',
+        element: <ProductDetailPage />,
+      },
+    ],
+  },
 ])
 
 function App() {

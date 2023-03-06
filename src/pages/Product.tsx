@@ -11,7 +11,6 @@ export default function ProductPage() {
   const product = appCtx.currentProduct as IProduct
 
   const handleCancel = () => {
-    console.log('to Cart')
     navigate('/cart')
   }
 

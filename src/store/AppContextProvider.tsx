@@ -26,11 +26,7 @@ const defaultAppState: IAppState = {
 
 const appReducer = (state: any, action: any) => {
   if (action.type === 'ADD_PRODUCT') {
-    console.log('action', action)
     const { product: newProduct } = action
-    console.log(7878, newProduct)
-    const yyy = { ...state, currentProduct: { ...newProduct } }
-    console.log(9494949, yyy)
     return { ...state, currentProduct: { ...newProduct } }
   }
 
@@ -39,8 +35,14 @@ const appReducer = (state: any, action: any) => {
   }
 
   if (action.type === 'ADD_ITEM_TO_CART') {
-    console.log('ACTION ', action)
     let updatedItems = state.cart.concat(action.item)
+    return { ...state, cart: updatedItems }
+  }
+
+  if (action.type === 'REMOVE_ITEM_FROM_CART') {
+    let updatedItems = state.cart.filter(
+      (item: IProduct) => item.id !== action.id
+    )
     return { ...state, cart: updatedItems }
   }
 
@@ -50,7 +52,7 @@ const appReducer = (state: any, action: any) => {
 export const AppContextProvider = (props: any) => {
   const [appState, dispatchAppAction] = useReducer(appReducer, defaultAppState)
 
-  const addProductHandler = (product: any) => {
+  const addProductHandler = (product: IProduct) => {
     dispatchAppAction({ type: 'ADD_PRODUCT', product })
   }
 
@@ -59,8 +61,19 @@ export const AppContextProvider = (props: any) => {
   }
 
   const addItemToCartHandler = (item: IProduct) => {
-    console.log('ITEMS', item)
-    dispatchAppAction({ type: 'ADD_ITEM_TO_CART', item })
+    const newItem = {
+      ...item,
+      id:
+        item.id +
+        Math.random()
+          .toString()
+          .replace(/[\s.,%]/g, ''),
+    }
+    dispatchAppAction({ type: 'ADD_ITEM_TO_CART', item: newItem })
+  }
+
+  const removeItemFromCartHandler = (id: string) => {
+    dispatchAppAction({ type: 'REMOVE_ITEM_FROM_CART', id })
   }
 
   const appContext = {
@@ -69,10 +82,10 @@ export const AppContextProvider = (props: any) => {
     addProduct: addProductHandler,
     clearProduct: clearProductHandler,
     addItemToCart: addItemToCartHandler,
+    removeItemFromCart: removeItemFromCartHandler,
   }
 
   return (
-    //@ts-ignore
     <AppContext.Provider value={appContext}>
       {props.children}
     </AppContext.Provider>

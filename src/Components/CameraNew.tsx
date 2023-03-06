@@ -67,13 +67,7 @@ export default function CameraNew() {
   }
 
   const onCapture = (blob: any) => {
-    let file = new File([blob], 'test.jpg', { type: 'image/jpeg' })
-    const newImg = document.createElement('img')
-    const url = URL.createObjectURL(blob)
-    newImg.onload = () => {
-      URL.revokeObjectURL(url)
-    }
-    newImg.src = url
+    const file = new File([blob], 'test.jpg', { type: 'image/jpeg' })
     const upload_url = 'http://localhost:5000/upload'
     const formData = new FormData()
     formData.append('file', file)
@@ -88,6 +82,9 @@ export default function CameraNew() {
       .then((response: { data: IProduct }) => {
         appCtx.addProduct(response.data)
         navigate('/product')
+      })
+      .catch((err) => {
+        throw new Error('Something went wrong')
       })
   }
 
