@@ -13,3 +13,25 @@
   transition: all 0.3s;
   cursor: pointer;
 }
+
+.btn__product {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  height: 54px;
+  width: 90%;
+  color: white;
+  background-color: #34c759;
+  border: 1px solid #34c759;
+  border-radius: 30px;
+  outline: transparent;
+  transition: all 0.3s;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.btn_title {
+  font-weight: 600;
+}

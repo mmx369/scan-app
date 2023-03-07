@@ -1,11 +1,14 @@
 import { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { ReactComponent as BottomLineSvg } from '../assets/bottomLine.svg'
 import { ReactComponent as BuySvg } from '../assets/buy.svg'
 import { ReactComponent as CameraIconSvg } from '../assets/camera.svg'
 import { ReactComponent as ExitSvg } from '../assets/exit.svg'
 import AppContext from '../store/app-context'
 import Button from '../ui/Button'
 import CartItem from './CartItem'
+
+import classes from './Cart.module.css'
 
 export default function Cart() {
   const cartCtx = useContext(AppContext)
@@ -27,16 +30,20 @@ export default function Cart() {
   )
 
   return (
-    <>
-      <div>
-        <span>
-          <BuySvg /> Buy
-        </span>
-        <div>
-          <ExitSvg />
+    <div className={classes.container}>
+      <div className={classes.header}>
+        <div className={classes.header__buyicon}>
+          <BuySvg /> &nbsp; Buy
         </div>
-        <h3>МОИ ТОВАРЫ</h3>
+        <div className={classes.header__exiticon}>
+          <Link to={'/'}>
+            <ExitSvg />
+          </Link>
+        </div>
       </div>
+      <hr />
+      <div className={classes.title}>МОИ ТОВАРЫ</div>
+
       {cartItems}
       {cartCtx.cart.length !== 0 && (
         <div>
@@ -53,15 +60,27 @@ export default function Cart() {
         </div>
       )}
       {cartCtx.cart.length === 0 && (
-        <div>
-          <Button
-            children='Сканировать'
-            icon={CameraIconSvg}
-            typeButton='button'
-            onClick={() => navigate('/scanning')}
-          />
-        </div>
+        <>
+          <div className={classes.upperFooter}>
+            <div className={classes.upperFooter__text}>
+              Пока что товаров нет в корзине. Скорее добавьте новые.
+            </div>
+          </div>
+          <div className={classes.footer}>
+            <div className={classes.footer__button}>
+              <Button
+                children='Сканировать'
+                icon={CameraIconSvg}
+                typeButton='button'
+                onClick={() => navigate('/scanning')}
+              />
+            </div>
+            <div className={classes.footer_img}>
+              <BottomLineSvg />
+            </div>
+          </div>
+        </>
       )}
-    </>
+    </div>
   )
 }

@@ -23,13 +23,15 @@ export const Button: React.FC<IButtonProps> = ({
 }) => {
   return (
     <button
-      className={classes.btn}
+      className={
+        className === 'btn__product' ? classes.btn__product : classes.btn
+      }
       disabled={isDisabled}
       type={typeButton}
       onClick={onClick}
       {...props}
     >
-      <span>{children}</span>
+      <span className={classes.btn_title}>{children}</span> &nbsp;
     </button>
   )
 }
