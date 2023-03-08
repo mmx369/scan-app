@@ -111,6 +111,5 @@
 }
 
 .footer_img {
-  position: absolute;
-  bottom: 1px;
+  text-align: center;
 }

@@ -27,6 +27,7 @@ export default function HomePage() {
             onClick={() => navigate('/cart')}
           />
         </div>
+
         <div className={classes.footer_img}>
           <BottomLineSvg />
         </div>
