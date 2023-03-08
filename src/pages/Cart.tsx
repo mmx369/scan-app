@@ -15,7 +15,7 @@ export default function Cart() {
   const navigate = useNavigate()
 
   const cartItems = (
-    <ul>
+    <div className={classes.wrapper}>
       {cartCtx.cart.map((item) => (
         <Link to={`/cart/${item.id}`} key={item.id}>
           <CartItem
@@ -26,11 +26,17 @@ export default function Cart() {
           />
         </Link>
       ))}
-    </ul>
+    </div>
   )
 
   return (
-    <div className={classes.container}>
+    <div
+      className={
+        cartCtx.cart.length === 0
+          ? classes.container_cartempty
+          : classes.container_cart
+      }
+    >
       <div className={classes.header}>
         <div className={classes.header__buyicon}>
           <BuySvg /> &nbsp; Buy
@@ -46,18 +52,31 @@ export default function Cart() {
 
       {cartItems}
       {cartCtx.cart.length !== 0 && (
-        <div>
-          <Button
-            children='Перейти к оплате'
-            typeButton='button'
-            onClick={() => navigate('/checkout')}
-          />
-          <Button
-            children='+'
-            typeButton='button'
-            onClick={() => navigate('/scanning')}
-          />
-        </div>
+        <>
+          <div className={classes.action}>
+            <div className={classes.action__buttons}>
+              <div className={classes.action__button}>
+                <Button
+                  children='Перейти к оплате'
+                  className='btn__product'
+                  typeButton='button'
+                  onClick={() => navigate('/checkout')}
+                />
+              </div>
+              <div className={classes.action__button_2}>
+                <Button
+                  children='+'
+                  typeButton='button'
+                  className='btn__plus_scan'
+                  onClick={() => navigate('/scanning')}
+                />
+              </div>
+            </div>
+            <div className={classes.footer_img}>
+              <BottomLineSvg />
+            </div>
+          </div>
+        </>
       )}
       {cartCtx.cart.length === 0 && (
         <>

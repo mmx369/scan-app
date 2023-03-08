@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import AppContext from '../store/app-context'
 import Button from '../ui/Button'
 
+import classes from './ProductDetailPage.module.css'
+
 export default function ProductDetailPage() {
   const navigate = useNavigate()
   const { productId } = useParams()
@@ -18,27 +20,40 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <div>
-      <div>
-        <div>
-          <h2>{product.title}</h2>
-        </div>
+    <div className={classes.container}>
+      <div className={classes.title}>{product.title}</div>
+      <div className={classes.title__second}>
         <div>{`Артикул: ${product.item}`}</div>
         <div>{`Масса: ${product.weight} ${product.measure}`}</div>
-        <div>
-          <div>{product.kkal} ККал</div>
-          <div>{product.protein} Белки</div>
-          <div>{product.fats} Жиры</div>
-          <div>{product.carbohydrates} Углеводы</div>
-        </div>
-        <div>{product.description}</div>
-        <Button
-          children='Удалить из корзины'
-          typeButton='button'
-          onClick={cartItemRemoveHandler.bind(null, productId!)}
-        />
       </div>
-      ProductDetailPage ID: {productId}
+      <hr />
+      <div className={classes.nutrition}>
+        <div className={classes.nutrition__block}>
+          <strong>{product.kkal}</strong>
+          <div>ККал</div>
+        </div>
+        <div className={classes.nutrition__block}>
+          <strong>{product.protein}</strong>
+          <div>Белки</div>
+        </div>
+        <div className={classes.nutrition__block}>
+          <strong>{product.fats}</strong> <div>Жиры</div>
+        </div>
+        <div className={classes.nutrition__block}>
+          <strong>{product.carbohydrates}</strong> <div>Углеводы</div>
+        </div>
+      </div>
+      <div className={classes.description}>{product.description}</div>
+      <div className={classes.action}>
+        <div className={classes.action__button}>
+          <Button
+            children='Удалить из корзины'
+            typeButton='button'
+            className='btn__delete'
+            onClick={cartItemRemoveHandler.bind(null, productId!)}
+          />
+        </div>
+      </div>
     </div>
   )
 }

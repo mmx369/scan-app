@@ -21,10 +21,18 @@ export const Button: React.FC<IButtonProps> = ({
   onClick,
   ...props
 }) => {
+  console.log(777, className)
+
   return (
     <button
       className={
-        className === 'btn__product' ? classes.btn__product : classes.btn
+        className === 'btn__product'
+          ? classes.btn__product
+          : className === 'btn__plus_scan'
+          ? classes.btn__plus_scan
+          : className === 'btn__delete'
+          ? classes.btn__delete
+          : classes.btn
       }
       disabled={isDisabled}
       type={typeButton}
