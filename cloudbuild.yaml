@@ -1,0 +1,10 @@
+steps:
+  - name: node
+    entrypoint: npm
+    args: ['install', '--legacy-peer-deps']
+  - name: node
+    entrypoint: npm
+    args: ['run', 'build']
+  - name: node
+    entrypoint: npm
+    args: ['start']
