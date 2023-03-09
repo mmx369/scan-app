@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ReactComponent as BottomLineSvg } from '../assets/bottomLine.svg'
@@ -30,12 +31,15 @@ export default function Cart() {
   )
 
   return (
-    <div
+    <motion.div
       className={
         cartCtx.cart.length === 0
           ? classes.container_cartempty
           : classes.container_cart
       }
+      initial={{ width: 0 }}
+      animate={{ width: '100%' }}
+      exit={{ x: -window.innerWidth, transition: { duration: 0.6 } }}
     >
       <div className={classes.header}>
         <div className={classes.header__buyicon}>
@@ -100,6 +104,6 @@ export default function Cart() {
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   )
 }

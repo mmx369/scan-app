@@ -13,7 +13,7 @@ const defaultAppState: IAppState = {
     title: '',
     weight: 0,
     measure: '',
-    item: '',
+    article: 0,
     kkal: 0,
     protein: 0,
     fats: 0,

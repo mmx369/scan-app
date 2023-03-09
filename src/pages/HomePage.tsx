@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { ReactComponent as BottomLineSvg } from '../assets/bottomLine.svg'
 import { ReactComponent as BuySvg } from '../assets/buy.svg'
@@ -8,7 +9,12 @@ import classes from './HomePage.module.css'
 export default function HomePage() {
   const navigate = useNavigate()
   return (
-    <div className={classes.container}>
+    <motion.div
+      className={classes.container}
+      initial={{ width: 0 }}
+      animate={{ width: '100%' }}
+      exit={{ x: -window.innerWidth, transition: { duration: 0.6 } }}
+    >
       <div className={classes.upperFooter}>
         <div className={classes.upperFooter_text}>
           Поднесите камеру, нейросети сами поймут что это и добавят в корзину.
@@ -32,6 +38,6 @@ export default function HomePage() {
           <BottomLineSvg />
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

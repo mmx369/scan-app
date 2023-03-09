@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ReactComponent as CancelSvg } from '../assets/cancel.svg'
@@ -22,10 +23,15 @@ export default function ProductPage() {
   }
 
   return (
-    <div className={classes.container}>
+    <motion.div
+      className={classes.container}
+      initial={{ width: 0 }}
+      animate={{ width: '100%' }}
+      exit={{ x: -window.innerWidth, transition: { duration: 0.6 } }}
+    >
       <div className={classes.title}>{product.title}</div>
       <div className={classes.title__second}>
-        <div>{`Артикул: ${product.item}`}</div>
+        <div>{`Артикул: ${product.article}`}</div>
         <div>{`Масса: ${product.weight} ${product.measure}`}</div>
       </div>
       <hr />
@@ -59,6 +65,6 @@ export default function ProductPage() {
           <CancelSvg />
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

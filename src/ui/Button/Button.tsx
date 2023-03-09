@@ -21,8 +21,6 @@ export const Button: React.FC<IButtonProps> = ({
   onClick,
   ...props
 }) => {
-  console.log(777, className)
-
   return (
     <button
       className={
