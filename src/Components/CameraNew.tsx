@@ -68,7 +68,7 @@ export default function CameraNew() {
 
   const onCapture = (blob: any) => {
     const file = new File([blob], 'test.jpg', { type: 'image/jpeg' })
-    const upload_url = 'http://klishevich.com/upload'
+    const upload_url = 'https://klishevich.com/upload'
     const formData = new FormData()
     formData.append('file', file)
     formData.append('fileName', file.name)
