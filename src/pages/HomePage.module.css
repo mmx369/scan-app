@@ -1,5 +1,14 @@
-.container {
+.root {
+  margin: auto;
+  max-width: 414px;
   height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 600px;
   border-radius: 20px;
   background-image: url('../assets/QBuy.jpg');
   background-color: white;
@@ -8,9 +17,12 @@
   background-size: contain;
 }
 
+.flexGrowBlock {
+  flex-grow: 1;
+}
+
 .upperFooter {
   display: flex;
-  position: absolute;
   bottom: 100px;
   max-width: 414px;
   padding-left: 10px;
@@ -40,7 +52,6 @@
 .footer {
   width: 100%;
   display: flex;
-  position: absolute;
   flex-direction: column;
   bottom: 5px;
   max-width: 414px;
