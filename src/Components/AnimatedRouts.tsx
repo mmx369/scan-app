@@ -12,7 +12,7 @@ export default function AnimatedRouts() {
   const location = useLocation()
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode='wait' initial={false}>
       <Routes location={location} key={location.pathname}>
         <Route path='/' element={<HomePage />} />
         <Route path='scanning' element={<Scanning />} />

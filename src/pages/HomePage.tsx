@@ -13,7 +13,7 @@ export default function HomePage() {
       className={classes.container}
       initial={{ width: 0 }}
       animate={{ width: '100%' }}
-      exit={{ x: -window.innerWidth, transition: { duration: 0.6 } }}
+      exit={{ x: -window.innerWidth, transition: { duration: 0.2 } }}
     >
       <div className={classes.upperFooter}>
         <div className={classes.upperFooter_text}>

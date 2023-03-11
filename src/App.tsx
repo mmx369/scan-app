@@ -1,7 +1,6 @@
 import { BrowserRouter as Router } from 'react-router-dom'
 import AnimatedRouts from './Components/AnimatedRouts'
 import { AppContextProvider } from './store/AppContextProvider'
-import { GlobalStyle } from './styles/global'
 
 // const router = createBrowserRouter([
 //   {
@@ -31,7 +30,6 @@ function App() {
         <Router>
           <AnimatedRouts />
         </Router>
-        <GlobalStyle />
         {/* <RouterProvider router={router} /> */}
       </AppContextProvider>
     </>
