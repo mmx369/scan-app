@@ -9,13 +9,14 @@ import classes from './HomePage.module.css'
 export default function HomePage() {
   const navigate = useNavigate()
   return (
-    <div className={classes.root}>
-      <motion.div
-        className={classes.container}
-        initial={{ width: 0 }}
-        animate={{ width: '100%' }}
-        exit={{ x: -window.innerWidth, transition: { duration: 0.2 } }}
-      >
+    <motion.div
+      className={classes.root}
+      animate={{ x: '0%' }}
+      exit={{ opacity: 1 }}
+      initial={{ x: '100%' }}
+      transition={{ duration: 0.75, ease: 'easeOut' }}
+    >
+      <div className={classes.container}>
         <div className={classes.flexGrowBlock} />
         <div className={classes.upperFooter}>
           <div className={classes.upperFooter_text}>Поднесите камеру, нейросети сами поймут что это и добавят в корзину.</div>
@@ -34,7 +35,7 @@ export default function HomePage() {
             <BottomLineSvg />
           </div>
         </div>
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   )
 }

@@ -1,17 +1,21 @@
 .root {
   margin: auto;
   max-width: 414px;
+  min-height: 570px;
   height: 100%;
+  position: absolute;
 }
 
 .container_cartempty {
   display: flex;
   flex-direction: column;
   height: 100%;
+  border-radius: 20px;
   background-color: #f2f2f7;
   background-image: url('../assets/image.png');
   background-repeat: no-repeat;
   background-position: center;
+  padding: 10px;
 }
 
 .container_cart {
@@ -32,20 +36,20 @@
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 5px 10px 5px;
+  padding: 5px;
 }
 
 .header__buyicon {
-  border-radius: 6px;
+  border-radius: 15px;
   background-color: white;
   font-weight: bold;
   display: flex;
-  padding: 3px;
+  padding: 5px;
 }
 
 .header__exiticon {
   display: flex;
-  padding: 5px;
+  padding: 6px;
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -54,55 +58,52 @@
 }
 
 .title {
+  margin-top: 10px;
   font-size: 28px;
   font-weight: 700;
 }
 
 .upperFooter {
   display: flex;
-  flex-wrap: wrap;
-  bottom: 100px;
-  margin-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 15px;
   justify-content: flex-end;
 }
 
 .upperFooter__text {
-  display: flex;
   width: 50%;
-  box-sizing: border-box;
   color: #1c1c1e;
-  padding-left: 5px;
   font-size: 12px;
   text-align: right;
 }
 
 .footer {
   display: flex;
-  height: 90px;
-  bottom: 1px;
   flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .footer__button {
   text-align: center;
-  width: 100%;
-  margin-bottom: 10px;
+}
+
+.footer_img {
+  text-align: center;
 }
 
 .action {
-  width: 100%;
   display: flex;
-  position: absolute;
-  height: 90px;
-  bottom: 1px;
   flex-direction: column;
-  align-content: center;
-  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .action__buttons {
   display: flex;
   width: 100%;
+  padding-bottom: 10px;
 }
 
 .action__button {
@@ -114,8 +115,4 @@
 .action__button_2 {
   display: flex;
   width: 20%;
-}
-
-.footer_img {
-  text-align: center;
 }

@@ -24,45 +24,43 @@ export default function ProductPage() {
 
   return (
     <motion.div
-      className={classes.container}
-      initial={{ width: 0 }}
-      animate={{ width: '100%' }}
-      exit={{ x: -window.innerWidth, transition: { duration: 0.6 } }}
+      className={classes.root}
+      animate={{ x: '0%' }}
+      exit={{ opacity: 1 }}
+      initial={{ x: '100%' }}
+      transition={{ duration: 0.75, ease: 'easeOut' }}
     >
-      <div className={classes.title}>{product.title}</div>
-      <div className={classes.title__second}>
-        <div>{`Артикул: ${product.article}`}</div>
-        <div>{`Масса: ${product.weight} ${product.measure}`}</div>
-      </div>
-      <hr />
-      <div className={classes.nutrition}>
-        <div className={classes.nutrition__block}>
-          <strong>{product.kkal}</strong>
-          <div>ККал</div>
+      <div className={classes.container}>
+        <div className={classes.title}>{product.title}</div>
+        <div className={classes.title__second}>
+          <div>{`Артикул: ${product.article}`}</div>
+          <div>{`Масса: ${product.weight} ${product.measure}`}</div>
         </div>
-        <div className={classes.nutrition__block}>
-          <strong>{product.protein}</strong>
-          <div>Белки</div>
+        <hr style={{ marginLeft: '15px', marginRight: '15px' }} />
+        <div className={classes.nutrition}>
+          <div className={classes.nutrition__block}>
+            <strong>{product.kkal}</strong>
+            <div>ККал</div>
+          </div>
+          <div className={classes.nutrition__block}>
+            <strong>{product.protein}</strong>
+            <div>Белки</div>
+          </div>
+          <div className={classes.nutrition__block}>
+            <strong>{product.fats}</strong> <div>Жиры</div>
+          </div>
+          <div className={classes.nutrition__block}>
+            <strong>{product.carbohydrates}</strong> <div>Углеводы</div>
+          </div>
         </div>
-        <div className={classes.nutrition__block}>
-          <strong>{product.fats}</strong> <div>Жиры</div>
-        </div>
-        <div className={classes.nutrition__block}>
-          <strong>{product.carbohydrates}</strong> <div>Углеводы</div>
-        </div>
-      </div>
-      <div className={classes.description}>{product.description}</div>
-      <div className={classes.action}>
-        <div className={classes.action__button}>
-          <Button
-            children={`${product.price} ₸ +`}
-            className='btn__product'
-            typeButton='button'
-            onClick={cartItemAddhandler.bind(null, product)}
-          />
-        </div>
-        <div className={classes.action__icon} onClick={handleCancel}>
-          <CancelSvg />
+        <div className={classes.description}>{product.description}</div>
+        <div className={classes.action}>
+          <div className={classes.action__button}>
+            <Button children={`${product.price} ₸ +`} className='btn__product' typeButton='button' onClick={cartItemAddhandler.bind(null, product)} />
+          </div>
+          <div className={classes.action__icon} onClick={handleCancel}>
+            <CancelSvg />
+          </div>
         </div>
       </div>
     </motion.div>
