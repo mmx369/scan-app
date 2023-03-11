@@ -5,6 +5,7 @@
   padding: 10px 30px;
   height: max-content;
   width: 80%;
+  height: 38px;
   color: white;
   background-color: #242424;
   border: 1px solid #242424;
@@ -15,14 +16,33 @@
 }
 
 .btn__plus_scan {
+  margin: auto;
   display: inline-flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   padding: 10px 30px;
-  height: 54px;
+  height: 38px;
   width: 90%;
   color: white;
   background-color: #1c1c1e;
+  border-radius: 30px;
+  outline: transparent;
+  transition: all 0.3s;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.btn__plus_scan_sm {
+  margin: auto;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  height: 54px;
+  width: 90%;
+  color: #f2f2f7;
+  background-color: black;
   border-radius: 30px;
   outline: transparent;
   transition: all 0.3s;
@@ -68,5 +88,6 @@
 }
 
 .btn_title {
+  display: flex;
   font-weight: 600;
 }

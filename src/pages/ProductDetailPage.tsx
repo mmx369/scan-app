@@ -17,51 +17,47 @@ export default function ProductDetailPage() {
     navigate('/cart')
   }
 
-  console.log(333, product)
-
   return (
     <motion.div
-      className={classes.container}
-      initial={{ width: 0 }}
-      animate={{ width: '100%' }}
-      exit={{ x: -window.innerWidth, transition: { duration: 0.6 } }}
+      className={classes.root}
+      animate={{ x: '0%' }}
+      exit={{ opacity: 1 }}
+      initial={{ x: '100%' }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
     >
-      <div className={classes.title}>{product && product.title}</div>
-      <div className={classes.title__second}>
-        <div>{`Артикул: ${product && product.article}`}</div>
-        <div>{`Масса: ${product && product.weight} ${
-          product && product.measure
-        }`}</div>
-      </div>
-      <hr />
-      <div className={classes.nutrition}>
-        <div className={classes.nutrition__block}>
-          <strong>{product && product.kkal}</strong>
-          <div>ККал</div>
+      <div className={classes.container}>
+        <div className={classes.title}>{product && product.title}</div>
+        <div className={classes.title__second}>
+          <div>{`Артикул: ${product && product.article}`}</div>
+          <div>{`Масса: ${product && product.weight} ${product && product.measure}`}</div>
         </div>
-        <div className={classes.nutrition__block}>
-          <strong>{product && product.protein}</strong>
-          <div>Белки</div>
+        <hr style={{ marginLeft: '15px', marginRight: '15px' }} />
+        <div className={classes.nutrition}>
+          <div className={classes.nutrition__block}>
+            <strong>{product && product.kkal}</strong>
+            <div>ККал</div>
+          </div>
+          <div className={classes.nutrition__block}>
+            <strong>{product && product.protein}</strong>
+            <div>Белки</div>
+          </div>
+          <div className={classes.nutrition__block}>
+            <strong>{product && product.fats}</strong> <div>Жиры</div>
+          </div>
+          <div className={classes.nutrition__block}>
+            <strong>{product && product.carbohydrates}</strong> <div>Углеводы</div>
+          </div>
         </div>
-        <div className={classes.nutrition__block}>
-          <strong>{product && product.fats}</strong> <div>Жиры</div>
-        </div>
-        <div className={classes.nutrition__block}>
-          <strong>{product && product.carbohydrates}</strong>{' '}
-          <div>Углеводы</div>
-        </div>
-      </div>
-      <div className={classes.description}>
-        {product && product.description}
-      </div>
-      <div className={classes.action}>
-        <div className={classes.action__button}>
-          <Button
-            children='Удалить из корзины'
-            typeButton='button'
-            className='btn__delete'
-            onClick={cartItemRemoveHandler.bind(null, productId!)}
-          />
+        <div className={classes.description}>{product && product.description}</div>
+        <div className={classes.action}>
+          <div className={classes.action__button}>
+            <Button
+              children='Удалить из корзины'
+              typeButton='button'
+              className='btn__delete'
+              onClick={cartItemRemoveHandler.bind(null, productId!)}
+            />
+          </div>
         </div>
       </div>
     </motion.div>

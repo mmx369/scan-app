@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion'
-import { useContext } from 'react'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ReactComponent as BottomLineSvg } from '../assets/bottomLine.svg'
 import { ReactComponent as BuySvg } from '../assets/buy.svg'
-import { ReactComponent as CameraIconSvg } from '../assets/camera.svg'
 import { ReactComponent as ExitSvg } from '../assets/exit.svg'
 import AppContext from '../store/app-context'
 import Button from '../ui/Button'
 import CartItem from './CartItem'
+
+import camSvg from '../assets/camera.svg'
 
 import classes from './Cart.module.css'
 
@@ -27,13 +27,14 @@ export default function Cart() {
   )
 
   return (
-    <div className={classes.root}>
-      <motion.div
-        className={cartCtx.cart.length === 0 ? classes.container_cartempty : classes.container_cart}
-        initial={{ width: 0 }}
-        animate={{ width: '100%' }}
-        exit={{ x: -window.innerWidth, transition: { duration: 0.6 } }}
-      >
+    <motion.div
+      className={classes.root}
+      animate={{ x: '0%' }}
+      exit={{ opacity: 1 }}
+      initial={{ x: '100%' }}
+      transition={{ duration: 0.75, ease: 'easeOut' }}
+    >
+      <div className={cartCtx.cart.length === 0 ? classes.container_cartempty : classes.container_cart}>
         <div className={classes.header}>
           <div className={classes.header__buyicon}>
             <BuySvg /> &nbsp; Buy
@@ -56,7 +57,7 @@ export default function Cart() {
                   <Button children='Перейти к оплате' className='btn__product' typeButton='button' onClick={() => navigate('/checkout')} />
                 </div>
                 <div className={classes.action__button_2}>
-                  <Button children='+' typeButton='button' className='btn__plus_scan' onClick={() => navigate('/scanning')} />
+                  <Button children='+' icon={camSvg} typeButton='button' className='btn__plus_scan_sm' onClick={() => navigate('/scanning')} />
                 </div>
               </div>
               <div className={classes.footer_img}>
@@ -72,7 +73,7 @@ export default function Cart() {
             </div>
             <div className={classes.footer}>
               <div className={classes.footer__button}>
-                <Button children='Сканировать' icon={CameraIconSvg} typeButton='button' onClick={() => navigate('/scanning')} />
+                <Button icon={camSvg} children='Сканировать' typeButton='button' className='btn__plus_scan' onClick={() => navigate('/scanning')} />
               </div>
               <div className={classes.footer_img}>
                 <BottomLineSvg />
@@ -80,7 +81,7 @@ export default function Cart() {
             </div>
           </React.Fragment>
         )}
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   )
 }

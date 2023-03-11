@@ -5,20 +5,18 @@ export const Wrapper = styled.div`
   flex-flow: column;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  border: 2px solid red;
+  height: 100%;
+  min-height: 570px;
 `
 export const Container = styled.div`
   position: relative;
   overflow: hidden;
   width: 100%;
-  border: 2px solid yellow;
   max-width: ${({ maxWidth }: any) => maxWidth && `${maxWidth}px`};
   max-height: ${({ maxHeight }: any) => maxHeight && `${maxHeight}px`};
 `
 export const Video = styled.video`
   position: absolute;
-
   &::-webkit-media-controls-play-button {
     display: none !important;
     -webkit-appearance: none;
@@ -31,7 +29,6 @@ export const Overlay = styled.div`
   bottom: 100px;
   left: 20px;
   box-shadow: 0px 0px 20px 56px rgba(0, 0, 0, 0.6);
-  border: 3px solid green;
   border-radius: 10px;
 `
 
@@ -67,4 +64,30 @@ export const Flash = styled.div`
       `
     }
   }}
+`
+export const CancelBtn = styled.div`
+  border-radius: 50%;
+  height: 54px;
+  width: 54px;
+  background-color: white;
+  color: red;
+  text-align: center;
+  padding: 16px;
+  font-weight: 900;
+`
+export const Footer = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 5px 10px;
+`
+export const LoaderOverlay = styled.div`
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 `
