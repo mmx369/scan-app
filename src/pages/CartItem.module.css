@@ -2,7 +2,7 @@
   background-color: white;
   border-radius: 12px;
   height: 104px;
-  width: 361px;
+  max-width: 410px;
   display: flex;
   margin: 5px;
   box-shadow: 3px;

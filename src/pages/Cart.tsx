@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ReactComponent as BottomLineSvg } from '../assets/bottomLine.svg'
 import { ReactComponent as BuySvg } from '../assets/buy.svg'
@@ -49,9 +49,10 @@ export default function Cart() {
         <div className={classes.title}>МОИ ТОВАРЫ</div>
 
         {cartItems}
+
         {cartCtx.cart.length !== 0 && (
           <>
-            <div className={classes.action}>
+            <div className={classes.footer}>
               <div className={classes.action__buttons}>
                 <div className={classes.action__button}>
                   <Button children='Перейти к оплате' className='btn__product' typeButton='button' onClick={() => navigate('/checkout')} />
@@ -66,8 +67,9 @@ export default function Cart() {
             </div>
           </>
         )}
+
         {cartCtx.cart.length === 0 && (
-          <React.Fragment>
+          <>
             <div className={classes.upperFooter}>
               <div className={classes.upperFooter__text}>Пока что товаров нет в корзине. Скорее добавьте новые.</div>
             </div>
@@ -79,7 +81,7 @@ export default function Cart() {
                 <BottomLineSvg />
               </div>
             </div>
-          </React.Fragment>
+          </>
         )}
       </div>
     </motion.div>

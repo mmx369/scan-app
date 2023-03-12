@@ -19,9 +19,9 @@ const defaultAppState: IAppState = {
     fats: 0,
     carbohydrates: 0,
     description: '',
-    price: 0,
+    price: 0
   },
-  cart: [],
+  cart: []
 }
 
 const appReducer = (state: any, action: any) => {
@@ -40,9 +40,7 @@ const appReducer = (state: any, action: any) => {
   }
 
   if (action.type === 'REMOVE_ITEM_FROM_CART') {
-    let updatedItems = state.cart.filter(
-      (item: IProduct) => item.id !== action.id
-    )
+    let updatedItems = state.cart.filter((item: IProduct) => item.id !== action.id)
     return { ...state, cart: updatedItems }
   }
 
@@ -67,7 +65,7 @@ export const AppContextProvider = (props: any) => {
         item.id +
         Math.random()
           .toString()
-          .replace(/[\s.,%]/g, ''),
+          .replace(/[\s.,%]/g, '')
     }
     dispatchAppAction({ type: 'ADD_ITEM_TO_CART', item: newItem })
   }
@@ -82,12 +80,8 @@ export const AppContextProvider = (props: any) => {
     addProduct: addProductHandler,
     clearProduct: clearProductHandler,
     addItemToCart: addItemToCartHandler,
-    removeItemFromCart: removeItemFromCartHandler,
+    removeItemFromCart: removeItemFromCartHandler
   }
 
-  return (
-    <AppContext.Provider value={appContext}>
-      {props.children}
-    </AppContext.Provider>
-  )
+  return <AppContext.Provider value={appContext}>{props.children}</AppContext.Provider>
 }

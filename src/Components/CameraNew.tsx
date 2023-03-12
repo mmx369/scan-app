@@ -165,7 +165,7 @@ export default function CameraNew() {
                     <Footer>
                       <div style={{ width: '50%', fontSize: '12px' }}>Расположите товар в рамке так чтобы было видно этикетку.</div>
                       <div style={{ flexGrow: 1 }} />
-                      <CancelBtn>X</CancelBtn>
+                      <CancelBtn onClick={() => navigate('/cart')}>X</CancelBtn>
                     </Footer>
                   </>
                 )}
