@@ -8,7 +8,21 @@ import { useOffsets } from '../hooks/useOffsets'
 import { useUserMedia } from '../hooks/useUserMedia'
 import AppContext from '../store/app-context'
 
-import { CancelBtn, Canvas, Container, Flash, Footer, LoaderOverlay, Overlay, Video, Wrapper } from '../styles/camera'
+import {
+  CancelBtn,
+  Canvas,
+  Container,
+  Flash,
+  Footer,
+  LoaderOverlay,
+  Overlay,
+  OverlayBottomLeftCorner,
+  OverlayBottomRightCorner,
+  OverlayTopLeftCorner,
+  OverlayTopRightCorner,
+  Video,
+  Wrapper
+} from '../styles/camera'
 import { IProduct } from '../types/Product'
 import Button from '../ui/Button'
 
@@ -123,7 +137,7 @@ export default function CameraNew() {
   return (
     <>
       {isShowCamera && (
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', height: '100%' }}>
           <Measure bounds onResize={handleResize}>
             {({ measureRef }) => (
               <Wrapper>
@@ -148,7 +162,12 @@ export default function CameraNew() {
                       left: `-${offsets.x}px`
                     }}
                   />
-                  <Overlay hidden={!isVideoPlaying} />
+                  <Overlay hidden={!isVideoPlaying}>
+                    <OverlayTopLeftCorner />
+                    <OverlayTopRightCorner />
+                    <OverlayBottomLeftCorner />
+                    <OverlayBottomRightCorner />
+                  </Overlay>
                   <Canvas ref={canvasRef} width={container.width} height={container.height} />
                   <Flash
                     //@ts-ignore
@@ -156,17 +175,19 @@ export default function CameraNew() {
                     onAnimationEnd={() => setIsFlashing(false)}
                   />
                 </Container>
-                <div style={{ flexGrow: 1 }} />
                 {isVideoPlaying && (
                   <>
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
-                      <Button onClick={isCanvasEmpty ? handleCapture : handleClear}>сделать снимок</Button>
+                    <div style={{ flexGrow: 1 }} />
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
+                        <Button onClick={isCanvasEmpty ? handleCapture : handleClear}>сделать снимок</Button>
+                      </div>
+                      <Footer>
+                        <div style={{ width: '50%', fontSize: '12px' }}>Расположите товар в рамке так чтобы было видно этикетку.</div>
+                        <div style={{ flexGrow: 1 }} />
+                        <CancelBtn onClick={() => navigate('/cart')}>X</CancelBtn>
+                      </Footer>
                     </div>
-                    <Footer>
-                      <div style={{ width: '50%', fontSize: '12px' }}>Расположите товар в рамке так чтобы было видно этикетку.</div>
-                      <div style={{ flexGrow: 1 }} />
-                      <CancelBtn onClick={() => navigate('/cart')}>X</CancelBtn>
-                    </Footer>
                   </>
                 )}
               </Wrapper>

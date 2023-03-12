@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  min-height: 570px;
+  min-height: 600px;
 `
 export const Container = styled.div`
   position: relative;
@@ -30,6 +30,46 @@ export const Overlay = styled.div`
   left: 20px;
   box-shadow: 0px 0px 20px 56px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
+`
+export const OverlayTopLeftCorner = styled.div`
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border-top-left-radius: 20px;
+  border-top: 15px solid #34c759;
+  border-left: 15px solid #34c759;
+  width: 30px;
+  height: 30px;
+`
+export const OverlayTopRightCorner = styled.div`
+  position: absolute;
+  border-top-right-radius: 20px;
+  border-top: 15px solid #34c759;
+  border-right: 15px solid #34c759;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+`
+export const OverlayBottomLeftCorner = styled.div`
+  border-bottom: 15px solid #34c759;
+  border-left: 15px solid #34c759;
+  border-bottom-left-radius: 20px;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  width: 30px;
+  height: 30px;
+`
+export const OverlayBottomRightCorner = styled.div`
+  position: absolute;
+  border-bottom: 15px solid #34c759;
+  border-right: 15px solid #34c759;
+  border-bottom-right-radius: 20px;
+  bottom: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
 `
 
 const flashAnimation = keyframes`
