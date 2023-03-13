@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { motion } from 'framer-motion'
 import { useContext, useRef, useState } from 'react'
 import Measure from 'react-measure'
 import { useNavigate } from 'react-router-dom'
@@ -80,8 +81,10 @@ export default function CameraNew() {
     setIsLoading(true)
     setIsShowCamera(false)
     const file = new File([blob], 'test.jpg', { type: 'image/jpeg' })
-    const upload_url = 'https://klishevich.com'
+    // const upload_url = 'https://klishevich.com'
     // const upload_url = 'http://localhost:5000'
+    const upload_url = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/images'
+    const getDataUrl = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/products?imageId=2'
     const formData = new FormData()
     formData.append('file', file)
     formData.append('fileName', file.name)
@@ -91,8 +94,10 @@ export default function CameraNew() {
       }
     }
     try {
-      const response = await axios.post<string>(`${upload_url}/upload`, formData, config)
-      const product = await axios.post<IProduct>(`${upload_url}/find`, response, { headers: { 'Content-Type': 'application/json' } })
+      const response = await axios.post<string>(`${upload_url}`, formData, config)
+      console.log(555, response)
+      const product = await axios.get<IProduct>(`${getDataUrl}`)
+      console.log(666, product)
       appCtx.addProduct(product.data)
       navigate('/product')
       setIsLoading(false)
@@ -127,12 +132,6 @@ export default function CameraNew() {
     context.clearRect(0, 0, canvasRef.current!.width, canvasRef.current!.height)
     setIsCanvasEmpty(true)
   }
-
-  function handleSendPicture() {
-    console.log('Sending...')
-  }
-
-  console.log(8787, videoRef.current?.videoHeight, videoRef.current?.videoWidth)
 
   return (
     <>
@@ -196,12 +195,12 @@ export default function CameraNew() {
         </div>
       )}
       {isLoading && (
-        <>
+        <motion.div animate={{ y: '0%' }} exit={{ opacity: 1 }} initial={{ y: '100%' }} transition={{ duration: 0.75, ease: 'easeOut' }}>
           <LoaderOverlay />
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img style={{ width: '50%' }} src={loader} alt='Loading...' />
           </div>
-        </>
+        </motion.div>
       )}
     </>
   )

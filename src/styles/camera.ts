@@ -120,9 +120,16 @@ export const Footer = styled.div`
   width: 100%;
   padding: 5px 10px;
 `
+
 export const LoaderOverlay = styled.div`
+  background-color: red;
+  width: 50px;
+  height: 50px;
+  opacity: 0;
+`
+export const LoaderOverlay_old = styled.div`
   display: none;
-  position: fixed;
+  position: absolut;
   z-index: 1;
   left: 0;
   top: 0;
