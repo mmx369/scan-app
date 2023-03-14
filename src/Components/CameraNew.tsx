@@ -1,12 +1,11 @@
 import axios from 'axios'
-import { motion } from 'framer-motion'
 import { useContext, useRef, useState } from 'react'
 import Measure from 'react-measure'
 import { useNavigate } from 'react-router-dom'
-import loader from '../assets/loader.gif'
 import { useCardRatio } from '../hooks/useCardRatio'
 import { useOffsets } from '../hooks/useOffsets'
 import { useUserMedia } from '../hooks/useUserMedia'
+import ProductPreview from '../pages/ProductPreview'
 import AppContext from '../store/app-context'
 
 import {
@@ -15,7 +14,6 @@ import {
   Container,
   Flash,
   Footer,
-  LoaderOverlay,
   Overlay,
   OverlayBottomLeftCorner,
   OverlayBottomRightCorner,
@@ -24,8 +22,8 @@ import {
   Video,
   Wrapper
 } from '../styles/camera'
-import { IProduct } from '../types/Product'
 import Button from '../ui/Button'
+import Loader from './Loader'
 
 export interface CaptureOptions {
   audio: boolean
@@ -50,6 +48,7 @@ export default function CameraNew() {
   const [aspectRatio, calculateRatio] = useCardRatio(0.75)
   const [isLoading, setIsLoading] = useState(false)
   const [isShowCamera, setIsShowCamera] = useState(true)
+  const [isShowProduct, setIsShowProduct] = useState(false)
 
   const offsets = useOffsets(
     videoRef.current && videoRef.current.videoWidth,
@@ -79,12 +78,12 @@ export default function CameraNew() {
 
   const onCapture = async (blob: any) => {
     setIsLoading(true)
-    setIsShowCamera(false)
+    // setIsShowCamera(false)
     const file = new File([blob], 'test.jpg', { type: 'image/jpeg' })
-    // const upload_url = 'https://klishevich.com'
+    const upload_url = 'https://klishevich.com'
     // const upload_url = 'http://localhost:5000'
-    const upload_url = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/images'
-    const getDataUrl = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/products?imageId=2'
+    // const upload_url = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/images'
+    // const getDataUrl = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/products?imageId=2'
     const formData = new FormData()
     formData.append('file', file)
     formData.append('fileName', file.name)
@@ -94,12 +93,13 @@ export default function CameraNew() {
       }
     }
     try {
-      const response = await axios.post<string>(`${upload_url}`, formData, config)
-      console.log(555, response)
-      const product = await axios.get<IProduct>(`${getDataUrl}`)
-      console.log(666, product)
+      // const response = await axios.post<string>(`${upload_url}`, formData, config)
+      // console.log(555, response)
+      // const product = await axios.get<IProduct>(`${getDataUrl}`)
+      const response = await axios.post<string>(`${upload_url}/upload`, formData, config)
+      const product = await axios.post(`${upload_url}/find`, response)
       appCtx.addProduct(product.data)
-      navigate('/product')
+      setIsShowProduct(true)
       setIsLoading(false)
     } catch (error) {
       throw new Error('Something went wrong')
@@ -123,7 +123,7 @@ export default function CameraNew() {
     canvasRef.current?.toBlob((blob) => onCapture(blob), 'image/jpeg', 1)
     setIsCanvasEmpty(false)
     setIsFlashing(true)
-    setIsVideoPlaying(false)
+    // setIsVideoPlaying(false)
   }
 
   function handleClear() {
@@ -167,7 +167,7 @@ export default function CameraNew() {
                     <OverlayBottomLeftCorner />
                     <OverlayBottomRightCorner />
                   </Overlay>
-                  <Canvas ref={canvasRef} width={container.width} height={container.height} />
+                  <Canvas ref={canvasRef} width={container.width} height={container.height} style={{ opacity: 0 }} />
                   <Flash
                     //@ts-ignore
                     flash={isFlashing}
@@ -194,14 +194,9 @@ export default function CameraNew() {
           </Measure>
         </div>
       )}
-      {isLoading && (
-        <motion.div animate={{ y: '0%' }} exit={{ opacity: 1 }} initial={{ y: '100%' }} transition={{ duration: 0.75, ease: 'easeOut' }}>
-          <LoaderOverlay />
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <img style={{ width: '50%' }} src={loader} alt='Loading...' />
-          </div>
-        </motion.div>
-      )}
+
+      {isLoading && <Loader />}
+      {isShowProduct && !isLoading && <ProductPreview setIsShowProduct={setIsShowProduct} />}
     </>
   )
 }

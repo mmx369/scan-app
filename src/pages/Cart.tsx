@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ReactComponent as BottomLineSvg } from '../assets/bottomLine.svg'
 import { ReactComponent as BuySvg } from '../assets/buy.svg'
@@ -11,17 +11,30 @@ import CartItem from './CartItem'
 import camSvg from '../assets/camera.svg'
 
 import classes from './Cart.module.css'
+import ProductDetailPage from './ProductDetailPage'
 
 export default function Cart() {
   const cartCtx = useContext(AppContext)
   const navigate = useNavigate()
+  const [isShowProduct, setIsShowProduct] = useState(false)
+  const [productId, setProductId] = useState('')
+
+  console.log('SHOW', isShowProduct)
+
+  const openDetailHandler = (id: string) => {
+    console.log('ID', id)
+    setProductId(id)
+    setIsShowProduct(true)
+  }
 
   const cartItems = (
     <div className={classes.wrapper}>
       {cartCtx.cart.map((item) => (
-        <Link to={`/cart/${item.id}`} key={item.id}>
+        // <Link to={`/cart/${item.id}`} key={item.id}>
+        <div onClick={() => openDetailHandler(item.id)} key={item.id}>
           <CartItem title={item.title} weight={item.weight} measure={item.measure} price={item.price} />
-        </Link>
+        </div>
+        // </Link>
       ))}
     </div>
   )
@@ -84,6 +97,7 @@ export default function Cart() {
           </>
         )}
       </div>
+      {isShowProduct && <ProductDetailPage productId={productId} setIsShowProduct={setIsShowProduct} />}
     </motion.div>
   )
 }

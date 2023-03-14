@@ -13,8 +13,6 @@ export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
 }
 
 export const Button: React.FC<IButtonProps> = ({ className, children, isDisabled, typeButton, icon, onClick, ...props }) => {
-  console.log('SVG', icon)
-
   return (
     <button
       className={
