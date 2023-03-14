@@ -18,7 +18,7 @@ export default function ProductPreview({ setIsShowProduct }: TProps) {
   const [animation, setAnimation] = useState(true)
 
   const handleCancel = () => {
-    setAnimation(false)
+    navigate('/cart')
     setIsShowProduct(false)
   }
 

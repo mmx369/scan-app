@@ -14,7 +14,7 @@
 }
 
 .animation__down {
-  animation: slideDown 2s ease-out;
+  animation: slideDown 0.5s ease-out;
   animation-fill-mode: forwards;
 }
 
