@@ -98,7 +98,7 @@ export default function CameraNew() {
       const response = await axios.post<any>(`${upload_url}`, formData, config)
       const { imageId } = response.data
       console.log('IMAGE_ID', response.data.imageId)
-      await delay(3000)
+      await delay(7000)
       const product = await axios.get<any>(`${getDataUrl}${imageId}`)
       console.log('PRODUCT: ', product)
 
