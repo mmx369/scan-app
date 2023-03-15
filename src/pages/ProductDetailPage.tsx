@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import AppContext from '../store/app-context'
 import Button from '../ui/Button'
 
@@ -11,8 +10,6 @@ type TProps = {
 }
 
 export default function ProductDetailPage({ productId, setIsShowProduct }: TProps) {
-  const navigate = useNavigate()
-  // const { productId } = useParams()
   const appCtx = useContext(AppContext)
   const [animation, setAnimation] = useState(true)
 
@@ -22,13 +19,11 @@ export default function ProductDetailPage({ productId, setIsShowProduct }: TProp
     setTimeout(() => {
       appCtx.removeItemFromCart(id)
       setIsShowProduct(false)
-
-      // navigate('/cart')
     }, 600)
   }
 
   return (
-    <div className={`${classes.container} ${animation ? classes.animation__up : classes.animation__down}`} style={{ border: 'red solid 1px' }}>
+    <div className={`${classes.container} ${animation ? classes.animation__up : classes.animation__down}`}>
       <div className={classes.title}>{product && product.title}</div>
       <div className={classes.title__second}>
         <div>{`Артикул: ${product && product.article}`}</div>

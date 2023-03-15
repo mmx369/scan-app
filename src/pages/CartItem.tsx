@@ -17,6 +17,7 @@ const CartItem = ({ title, weight, measure, price }: TProps) => {
       </div>
       <div className={classes.card__title_wrapper}>
         <div className={classes.card__title}>{title}</div>
+        <div style={{ flexGrow: 1 }} />
         <div className={classes.card__title_info}>
           Масса: {weight} {measure} <span>{price} ₸</span>
         </div>

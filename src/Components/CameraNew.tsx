@@ -80,7 +80,8 @@ export default function CameraNew() {
     setIsLoading(true)
     // setIsShowCamera(false)
     const file = new File([blob], 'test.jpg', { type: 'image/jpeg' })
-    const upload_url_test = 'https://klishevich.com'
+    // const upload_url_test = 'https://klishevich.com'
+    // const upload_url_test = 'http://localhost:5000'
     const upload_url = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/images'
     const getDataUrl = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/products?imageId='
     const formData = new FormData()
@@ -97,7 +98,6 @@ export default function CameraNew() {
       const response = await axios.post<any>(`${upload_url}`, formData, config)
       const { imageId } = response.data
       console.log('IMAGE_ID', response.data.imageId)
-      alert(imageId)
       await delay(3000)
       const product = await axios.get<any>(`${getDataUrl}${imageId}`)
       console.log('PRODUCT: ', product)
@@ -177,7 +177,7 @@ export default function CameraNew() {
                     <OverlayBottomLeftCorner />
                     <OverlayBottomRightCorner />
                   </Overlay>
-                  <Canvas ref={canvasRef} width={container.width} height={container.height} />
+                  <Canvas ref={canvasRef} width={container.width} height={container.height} style={{ opacity: 0 }} />
                   <Flash
                     //@ts-ignore
                     flash={isFlashing}

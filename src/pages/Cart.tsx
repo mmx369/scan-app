@@ -22,7 +22,6 @@ export default function Cart() {
   console.log('SHOW', isShowProduct)
 
   const openDetailHandler = (id: string) => {
-    console.log('ID', id)
     setProductId(id)
     setIsShowProduct(true)
   }
@@ -30,11 +29,9 @@ export default function Cart() {
   const cartItems = (
     <div className={classes.wrapper}>
       {cartCtx.cart.map((item) => (
-        // <Link to={`/cart/${item.id}`} key={item.id}>
-        <div onClick={() => openDetailHandler(item.id)} key={item.id}>
+        <div onClick={() => openDetailHandler(item.id)} key={item.id} style={{ width: '100%' }}>
           <CartItem title={item.title} weight={item.weight} measure={item.measure} price={item.price} />
         </div>
-        // </Link>
       ))}
     </div>
   )
