@@ -98,7 +98,7 @@ export default function CameraNew() {
       const { imageId } = response.data
       console.log('IMAGE_ID', response.data.imageId)
       alert(imageId)
-      await delay(7000)
+      await delay(5000)
       const product = await axios.get<any>(`${getDataUrl}${imageId}`)
       console.log('PRODUCT: ', product)
 
