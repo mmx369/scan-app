@@ -21,14 +21,14 @@ export default function ProductDetailPage({ productId, setIsShowProduct }: TProp
     setAnimation(false)
     setTimeout(() => {
       appCtx.removeItemFromCart(id)
+      setIsShowProduct(false)
+
       // navigate('/cart')
     }, 600)
-
-    // setIsShowProduct(false)
   }
 
   return (
-    <div className={`${classes.container} ${animation ? classes.animation__up : classes.animation__down}`}>
+    <div className={`${classes.container} ${animation ? classes.animation__up : classes.animation__down}`} style={{ border: 'red solid 1px' }}>
       <div className={classes.title}>{product && product.title}</div>
       <div className={classes.title__second}>
         <div>{`Артикул: ${product && product.article}`}</div>

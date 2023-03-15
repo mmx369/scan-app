@@ -92,16 +92,20 @@ export default function CameraNew() {
       }
     }
     try {
+      const delay = (time: number) => new Promise((resolve, reject) => setTimeout(resolve, time))
       // to google_api
       const response = await axios.post<any>(`${upload_url}`, formData, config)
       const { imageId } = response.data
       console.log('IMAGE_ID', response.data.imageId)
+      await delay(5000)
       const product = await axios.get<any>(`${getDataUrl}${imageId}`)
       console.log('PRODUCT: ', product)
 
       //to my_test_api
       // const response = await axios.post<string>(`${upload_url_test}/upload`, formData, config)
+      // console.log(111, response)
       // const product = await axios.post(`${upload_url_test}/find`, response)
+      // console.log(222, product)
 
       appCtx.addProduct(product.data)
       setIsShowProduct(true)
@@ -172,7 +176,7 @@ export default function CameraNew() {
                     <OverlayBottomLeftCorner />
                     <OverlayBottomRightCorner />
                   </Overlay>
-                  <Canvas ref={canvasRef} width={container.width} height={container.height} style={{ opacity: 0 }} />
+                  <Canvas ref={canvasRef} width={container.width} height={container.height} />
                   <Flash
                     //@ts-ignore
                     flash={isFlashing}
