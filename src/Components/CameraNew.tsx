@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useContext, useRef, useState } from 'react'
 import Measure from 'react-measure'
 import { useNavigate } from 'react-router-dom'
+import { v4 as uuid } from 'uuid'
 import { useCardRatio } from '../hooks/useCardRatio'
 import { useOffsets } from '../hooks/useOffsets'
 import { useUserMedia } from '../hooks/useUserMedia'
@@ -50,6 +51,9 @@ export default function CameraNew() {
   const [isShowCamera, setIsShowCamera] = useState(true)
   const [isShowProduct, setIsShowProduct] = useState(false)
 
+  const unique_id = uuid()
+  const small_id = unique_id.slice(0, 5)
+
   const offsets = useOffsets(
     videoRef.current && videoRef.current.videoWidth,
     videoRef.current && videoRef.current.videoHeight,
@@ -79,7 +83,7 @@ export default function CameraNew() {
   const onCapture = async (blob: any) => {
     setIsLoading(true)
     // setIsShowCamera(false)
-    const file = new File([blob], 'test.jpg', { type: 'image/jpeg' })
+    const file = new File([blob], `${small_id}.jpg`, { type: 'image/jpeg' })
     const upload_url_test = 'https://klishevich.com'
     // const upload_url_test = 'http://localhost:5000'
     // const upload_url = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/images'
