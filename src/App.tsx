@@ -1,5 +1,5 @@
 import { BrowserRouter as Router } from 'react-router-dom'
-import AnimatedRouts from './Components/AnimatedRouts'
+import AnimatedRouts from './components/AnimatedRouts'
 import { AppContextProvider } from './store/AppContextProvider'
 
 function App() {

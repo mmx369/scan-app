@@ -3,14 +3,14 @@ import { useContext, useRef, useState } from 'react'
 import Measure from 'react-measure'
 import { useNavigate } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
+import { ReactComponent as CancelSvg } from '../assets/cancel.svg'
 import { useCardRatio } from '../hooks/useCardRatio'
 import { useOffsets } from '../hooks/useOffsets'
 import { useUserMedia } from '../hooks/useUserMedia'
-import ProductPreview from '../pages/ProductPreview'
 import AppContext from '../store/app-context'
-
+import Loader from './Loader'
+import PreviewProduct from './PreviewProduct'
 import {
-  CancelBtn,
   Canvas,
   Container,
   Flash,
@@ -21,10 +21,9 @@ import {
   OverlayTopLeftCorner,
   OverlayTopRightCorner,
   Video,
-  Wrapper
-} from '../styles/camera'
-import Button from '../ui/Button'
-import Loader from './Loader'
+  Wrapper,
+} from './styles/Camera'
+import { Button } from './ui/Button'
 
 export interface CaptureOptions {
   audio: boolean
@@ -33,10 +32,10 @@ export interface CaptureOptions {
 
 const CAPTURE_OPTIONS: CaptureOptions = {
   audio: false,
-  video: { facingMode: 'environment' }
+  video: { facingMode: 'environment' },
 }
 
-export default function CameraNew() {
+export default function Camera() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const navigate = useNavigate()
@@ -49,7 +48,7 @@ export default function CameraNew() {
   const [aspectRatio, calculateRatio] = useCardRatio(0.75)
   const [isLoading, setIsLoading] = useState(false)
   const [isShowCamera, setIsShowCamera] = useState(true)
-  const [isShowProduct, setIsShowProduct] = useState(false)
+  const [isShowPreviewProduct, setIsShowPreviewProduct] = useState(false)
 
   const unique_id = uuid()
   const small_id = unique_id.slice(0, 5)
@@ -61,20 +60,19 @@ export default function CameraNew() {
     container.height
   )
 
-  const mediaStream = useUserMedia(CAPTURE_OPTIONS) //get stream
-
+  const mediaStream = useUserMedia(CAPTURE_OPTIONS)
   if (mediaStream && videoRef.current && !videoRef.current.srcObject) {
     videoRef.current.srcObject = mediaStream
   }
 
-  function handleResize(contentRect: any) {
+  const handleResize = (contentRect: any) => {
     setContainer({
       width: contentRect.bounds.width,
-      height: Math.round(contentRect.bounds.width / aspectRatio)
+      height: Math.round(contentRect.bounds.width / aspectRatio),
     })
   }
 
-  function handleCanPlay() {
+  const handleCanPlay = () => {
     calculateRatio(videoRef.current?.videoHeight, videoRef.current?.videoWidth)
     setIsVideoPlaying(true)
     videoRef.current!.play()
@@ -93,34 +91,37 @@ export default function CameraNew() {
     formData.append('fileName', file.name)
     const config = {
       headers: {
-        'content-type': 'multipart/form-data'
-      }
+        'content-type': 'multipart/form-data',
+      },
     }
     try {
-      const delay = (time: number) => new Promise((resolve, reject) => setTimeout(resolve, time))
+      const delay = (time: number) =>
+        new Promise((resolve, reject) => setTimeout(resolve, time))
       // to google_api
       // const response = await axios.post<any>(`${upload_url}`, formData, config)
       // const { imageId } = response.data
       // console.log('IMAGE_ID', response.data.imageId)
-      // await delay(7000)
+      // await delay(3000)
       // const product = await axios.get<any>(`${getDataUrl}${imageId}`)
       // console.log('PRODUCT: ', product)
 
       //to my_test_api
-      const response = await axios.post<string>(`${upload_url_test}/upload`, formData, config)
-      console.log(111, response)
+      const response = await axios.post<string>(
+        `${upload_url_test}/upload`,
+        formData,
+        config
+      )
+      await delay(3000)
       const product = await axios.post(`${upload_url_test}/find`, response)
-      console.log(222, product)
-
       appCtx.addProduct(product.data)
-      setIsShowProduct(true)
+      setIsShowPreviewProduct(true)
       setIsLoading(false)
     } catch (error) {
       throw new Error('Something went wrong')
     }
   }
 
-  function handleCapture() {
+  const handleCapture = () => {
     const context = canvasRef.current?.getContext('2d')
     if (context == null) throw new Error('Could not get context')
     context.drawImage(
@@ -148,7 +149,7 @@ export default function CameraNew() {
   }
 
   return (
-    <>
+    <div>
       {isShowCamera && (
         <div style={{ display: 'flex', height: '100%' }}>
           <Measure bounds onResize={handleResize}>
@@ -160,7 +161,7 @@ export default function CameraNew() {
                   maxHeight={videoRef.current && videoRef.current.videoHeight}
                   maxWidth={videoRef.current && videoRef.current.videoWidth}
                   style={{
-                    height: `${container.height}px`
+                    height: `${container.height}px`,
                   }}
                 >
                   <Video
@@ -172,7 +173,7 @@ export default function CameraNew() {
                     muted
                     style={{
                       top: `-${offsets.y}px`,
-                      left: `-${offsets.x}px`
+                      left: `-${offsets.x}px`,
                     }}
                   />
                   <Overlay hidden={!isVideoPlaying}>
@@ -181,7 +182,12 @@ export default function CameraNew() {
                     <OverlayBottomLeftCorner />
                     <OverlayBottomRightCorner />
                   </Overlay>
-                  <Canvas ref={canvasRef} width={container.width} height={container.height} style={{ opacity: 0 }} />
+                  <Canvas
+                    ref={canvasRef}
+                    width={container.width}
+                    height={container.height}
+                    style={{ opacity: 0 }}
+                  />
                   <Flash
                     //@ts-ignore
                     flash={isFlashing}
@@ -189,28 +195,39 @@ export default function CameraNew() {
                   />
                 </Container>
                 {isVideoPlaying && (
-                  <>
-                    <div style={{ flexGrow: 1 }} />
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
-                        <Button onClick={isCanvasEmpty ? handleCapture : handleClear}>сделать снимок</Button>
+                  <div
+                    style={{
+                      marginTop: '15px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Button
+                      onClick={isCanvasEmpty ? handleCapture : handleClear}
+                    >
+                      сделать снимок
+                    </Button>
+                    <Footer>
+                      <div style={{ width: '60%', paddingLeft: '8px' }}>
+                        Расположите товар в рамке так чтобы было видно этикетку.
                       </div>
-                      <Footer>
-                        <div style={{ width: '50%', fontSize: '12px' }}>Расположите товар в рамке так чтобы было видно этикетку.</div>
-                        <div style={{ flexGrow: 1 }} />
-                        <CancelBtn onClick={() => navigate('/cart')}>X</CancelBtn>
-                      </Footer>
-                    </div>
-                  </>
+                      <CancelSvg
+                        onClick={() => navigate('/cart')}
+                        style={{ marginRight: '8px' }}
+                      />
+                    </Footer>
+                  </div>
                 )}
               </Wrapper>
             )}
           </Measure>
         </div>
       )}
-
       {isLoading && <Loader />}
-      {isShowProduct && !isLoading && <ProductPreview setIsShowProduct={setIsShowProduct} />}
-    </>
+      {isShowPreviewProduct && !isLoading && (
+        <PreviewProduct setIsShowPreviewProduct={setIsShowPreviewProduct} />
+      )}
+    </div>
   )
 }

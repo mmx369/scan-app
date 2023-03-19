@@ -1,18 +1,17 @@
 import { motion } from 'framer-motion'
-import CameraNew from '../Components/CameraNew'
-
+import Camera from '../components/Camera'
 import classes from './Scanning.module.css'
 
 export default function Scanning() {
   return (
     <motion.div
-      className={classes.root}
+      className={classes.container}
       animate={{ x: '0%' }}
       exit={{ opacity: 1 }}
       initial={{ x: '100%' }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+      transition={{ duration: 0.75, ease: 'easeOut' }}
     >
-      <CameraNew />
+      <Camera />
     </motion.div>
   )
 }

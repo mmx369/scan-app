@@ -1,27 +1,9 @@
-.root {
-  margin: auto;
-  max-width: 414px;
-  min-height: 570px;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  background-color: #42424aa4;
-}
-
-.animation__up {
-  animation: slideUp 0.5s ease-out;
-  animation-fill-mode: forwards;
-}
-
-.animation__down {
-  animation: slideDown 0.5s ease-out;
-  animation-fill-mode: forwards;
-}
-
 .container {
   position: absolute;
   display: flex;
   flex-direction: column;
+  animation: slideUp 0.5s ease-out;
+  animation-fill-mode: forwards;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   bottom: 0;
@@ -33,7 +15,7 @@
 }
 
 .title {
-  margin: 15px;
+  padding: 3px 0px 12px 12px;
   font-size: 24px;
   font-weight: 600;
 }
@@ -41,7 +23,8 @@
 .title__second {
   display: flex;
   justify-content: space-between;
-  margin: 15px;
+  padding: 3px 0px 12px 12px;
+  margin: 0 5px;
   font-size: 12px;
   font-weight: 500;
   color: #aeaeb2;
@@ -49,7 +32,8 @@
 
 .nutrition {
   display: flex;
-  margin: 15px 10px 15px;
+  margin: 5px;
+  justify-content: space-between;
 }
 
 .nutrition__block {
@@ -57,8 +41,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 15px;
   padding: 5px;
   margin: 5px;
@@ -82,8 +66,13 @@
 
 .action__button {
   display: flex;
-  width: 100%;
-  justify-content: center;
+  width: 80%;
+  justify-content: space-around;
+}
+
+.action__icon {
+  display: flex;
+  width: 20%;
 }
 
 @keyframes slideUp {
@@ -95,11 +84,13 @@
   }
 }
 
-@keyframes slideDown {
-  from {
-    height: 50%;
-  }
-  to {
-    height: 0%;
+@media (max-height: 650px) {
+  @keyframes slideUp {
+    from {
+      height: 0%;
+    }
+    to {
+      height: 60%;
+    }
   }
 }

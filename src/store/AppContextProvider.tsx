@@ -24,7 +24,7 @@ const defaultAppState: IAppState = {
   cart: []
 }
 
-const appReducer = (state: any, action: any) => {
+const appReducer = (state: IAppState, action: any) => {
   if (action.type === 'ADD_PRODUCT') {
     const { product: newProduct } = action
     return { ...state, currentProduct: { ...newProduct } }

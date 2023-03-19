@@ -105,20 +105,13 @@ export const Flash = styled.div`
     }
   }}
 `
-export const CancelBtn = styled.div`
-  border-radius: 50%;
-  height: 54px;
-  width: 54px;
-  background-color: white;
-  color: red;
-  text-align: center;
-  padding: 16px;
-  font-weight: 900;
-`
 export const Footer = styled.div`
   display: flex;
   width: 100%;
+  max-width: 100%;
+  margin-top: 10px;
   padding: 5px 10px;
+  justify-content: space-between;
 `
 
 export const LoaderOverlay = styled.div`
