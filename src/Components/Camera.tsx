@@ -21,7 +21,7 @@ import {
   OverlayTopLeftCorner,
   OverlayTopRightCorner,
   Video,
-  Wrapper,
+  Wrapper
 } from './styles/Camera'
 import { Button } from './ui/Button'
 
@@ -32,7 +32,7 @@ export interface CaptureOptions {
 
 const CAPTURE_OPTIONS: CaptureOptions = {
   audio: false,
-  video: { facingMode: 'environment' },
+  video: { facingMode: 'environment' }
 }
 
 export default function Camera() {
@@ -68,7 +68,7 @@ export default function Camera() {
   const handleResize = (contentRect: any) => {
     setContainer({
       width: contentRect.bounds.width,
-      height: Math.round(contentRect.bounds.width / aspectRatio),
+      height: Math.round(contentRect.bounds.width / aspectRatio)
     })
   }
 
@@ -91,12 +91,11 @@ export default function Camera() {
     formData.append('fileName', file.name)
     const config = {
       headers: {
-        'content-type': 'multipart/form-data',
-      },
+        'content-type': 'multipart/form-data'
+      }
     }
     try {
-      const delay = (time: number) =>
-        new Promise((resolve, reject) => setTimeout(resolve, time))
+      const delay = (time: number) => new Promise((resolve, reject) => setTimeout(resolve, time))
       // to google_api
       // const response = await axios.post<any>(`${upload_url}`, formData, config)
       // const { imageId } = response.data
@@ -106,11 +105,7 @@ export default function Camera() {
       // console.log('PRODUCT: ', product)
 
       //to my_test_api
-      const response = await axios.post<string>(
-        `${upload_url_test}/upload`,
-        formData,
-        config
-      )
+      const response = await axios.post<string>(`${upload_url_test}/upload`, formData, config)
       await delay(3000)
       const product = await axios.post(`${upload_url_test}/find`, response)
       appCtx.addProduct(product.data)
@@ -161,7 +156,7 @@ export default function Camera() {
                   maxHeight={videoRef.current && videoRef.current.videoHeight}
                   maxWidth={videoRef.current && videoRef.current.videoWidth}
                   style={{
-                    height: `${container.height}px`,
+                    height: `${container.height}px`
                   }}
                 >
                   <Video
@@ -173,7 +168,7 @@ export default function Camera() {
                     muted
                     style={{
                       top: `-${offsets.y}px`,
-                      left: `-${offsets.x}px`,
+                      left: `-${offsets.x}px`
                     }}
                   />
                   <Overlay hidden={!isVideoPlaying}>
@@ -182,12 +177,7 @@ export default function Camera() {
                     <OverlayBottomLeftCorner />
                     <OverlayBottomRightCorner />
                   </Overlay>
-                  <Canvas
-                    ref={canvasRef}
-                    width={container.width}
-                    height={container.height}
-                    style={{ opacity: 0 }}
-                  />
+                  <Canvas ref={canvasRef} width={container.width} height={container.height} style={{ opacity: 0 }} />
                   <Flash
                     //@ts-ignore
                     flash={isFlashing}
@@ -200,22 +190,13 @@ export default function Camera() {
                       marginTop: '15px',
                       display: 'flex',
                       flexDirection: 'column',
-                      alignItems: 'center',
+                      alignItems: 'center'
                     }}
                   >
-                    <Button
-                      onClick={isCanvasEmpty ? handleCapture : handleClear}
-                    >
-                      сделать снимок
-                    </Button>
+                    <Button onClick={isCanvasEmpty ? handleCapture : handleClear}>сделать снимок</Button>
                     <Footer>
-                      <div style={{ width: '60%', paddingLeft: '8px' }}>
-                        Расположите товар в рамке так чтобы было видно этикетку.
-                      </div>
-                      <CancelSvg
-                        onClick={() => navigate('/cart')}
-                        style={{ marginRight: '8px' }}
-                      />
+                      <div style={{ width: '60%', paddingLeft: '8px' }}>Расположите товар в рамке так чтобы было видно этикетку.</div>
+                      <CancelSvg onClick={() => navigate('/cart')} style={{ marginRight: '8px' }} />
                     </Footer>
                   </div>
                 )}
@@ -225,9 +206,7 @@ export default function Camera() {
         </div>
       )}
       {isLoading && <Loader />}
-      {isShowPreviewProduct && !isLoading && (
-        <PreviewProduct setIsShowPreviewProduct={setIsShowPreviewProduct} />
-      )}
+      {isShowPreviewProduct && !isLoading && <PreviewProduct setIsShowPreviewProduct={setIsShowPreviewProduct} />}
     </div>
   )
 }
