@@ -12,7 +12,15 @@ export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
   onClick?: (event: any) => any
 }
 
-export const Button: React.FC<IButtonProps> = ({ className, children, isDisabled, typeButton, icon, onClick, ...props }) => {
+export const Button: React.FC<IButtonProps> = ({
+  className,
+  children,
+  isDisabled,
+  typeButton,
+  icon,
+  onClick,
+  ...props
+}) => {
   return (
     <button
       className={

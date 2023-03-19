@@ -1,16 +1,9 @@
-.root {
-  margin: auto;
-  max-width: 414px;
-  min-height: 570px;
-  height: 100%;
-  position: absolute;
-}
-
 .container {
+  position: absolute;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-radius: 20px;
+  width: 100%;
   background-image: url('../assets/QBuy.jpg');
   background-color: white;
   background-position: top center;
@@ -27,6 +20,7 @@
   padding-left: 10px;
   padding-right: 10px;
   margin-bottom: 15px;
+  max-width: 414px;
 }
 
 .upperFooter_text {
@@ -54,6 +48,7 @@
   flex-direction: column;
   padding-top: 10px;
   padding-bottom: 10px;
+  max-width: 414px;
 }
 
 .footer_button {
@@ -67,5 +62,11 @@
 @media (max-height: 650px) {
   .container {
     background-image: url('../assets/QBuy_sm.jpg');
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .container {
+    min-height: 700px;
   }
 }

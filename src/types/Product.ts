@@ -2,7 +2,7 @@ export interface IProduct {
   id: string
   title: string
   weight: number
-  measure: string
+  measure?: string
   article: number
   kkal: number
   protein: number

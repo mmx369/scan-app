@@ -1,18 +1,52 @@
-* {
-  margin: 0;
-  outline: 0;
-  box-sizing: border-box;
+html {
+  margin: auto;
+  font-size: 16px;
+  height: 100%;
+  max-width: 450px;
   font-family: 'Inter', sans-serif;
 }
 
-html,
+*,
+*:before,
+*:after {
+  font-family: 'Inter', sans-serif;
+}
+
 body {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
   height: 100%;
-  width: 100%;
-  margin: 0 auto;
+  max-width: 450px;
   font-family: 'Inter', sans-serif;
 }
 
 #root {
   height: 100%;
+  max-height: 900px;
+  position: relative;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }

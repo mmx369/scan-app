@@ -16,7 +16,7 @@ const AppContext = createContext<IAppContext>({
   addProduct: () => {},
   clearProduct: () => {},
   addItemToCart: () => {},
-  removeItemFromCart: () => {},
+  removeItemFromCart: () => {}
 })
 
 export default AppContext

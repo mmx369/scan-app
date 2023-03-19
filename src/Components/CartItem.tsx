@@ -5,11 +5,10 @@ import classes from './CartItem.module.css'
 type TProps = {
   title: string
   weight: number
-  measure: string
   price: number
 }
 
-const CartItem = ({ title, weight, measure, price }: TProps) => {
+const CartItem = ({ title, weight, price }: TProps) => {
   return (
     <div className={classes.card}>
       <div className={classes.card__img}>
@@ -19,7 +18,7 @@ const CartItem = ({ title, weight, measure, price }: TProps) => {
         <div className={classes.card__title}>{title}</div>
         <div style={{ flexGrow: 1 }} />
         <div className={classes.card__title_info}>
-          Масса: {weight} {measure} <span>{price} ₸</span>
+          Масса: {weight} гр. <span>{price} ₸</span>
         </div>
       </div>
     </div>

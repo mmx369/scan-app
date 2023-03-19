@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export function useOffsets(
-  vWidth: number | null,
-  vHeight: number | null,
-  cWidth: number,
-  cHeight: number
-) {
+export function useOffsets(vWidth: number | null, vHeight: number | null, cWidth: number, cHeight: number) {
   const [offsets, setOffsets] = useState({ x: 0, y: 0 })
 
   useEffect(() => {

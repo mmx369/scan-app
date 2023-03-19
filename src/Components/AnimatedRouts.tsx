@@ -16,7 +16,6 @@ export default function AnimatedRouts() {
         <Route path='scanning' element={<Scanning />} />
         <Route path='checkout' element={<Checkout />} />
         <Route path='cart' element={<Cart />} />
-        {/* <Route path='cart/:productId' element={<ProductDetailPage />} /> */}
       </Routes>
     </AnimatePresence>
   )
