@@ -15,6 +15,43 @@
   height: 0px;
 }
 
+.first {
+  animation-name: colorChange;
+  animation-delay: 1s;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+.second {
+  animation-name: colorChange;
+  animation-delay: 2s;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+.third {
+  animation-name: colorChange;
+  animation-delay: 3s;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+.fourth {
+  animation-name: colorChange;
+  animation-delay: 4s;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes colorChange {
+  from {
+    fill: #d1d1d6;
+  }
+  to {
+    fill: #34c759;
+  }
+}
+
 @keyframes slideUp {
   from {
     height: 0%;
