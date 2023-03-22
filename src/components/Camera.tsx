@@ -8,6 +8,7 @@ import { useCardRatio } from '../hooks/useCardRatio'
 import { useOffsets } from '../hooks/useOffsets'
 import { useUserMedia } from '../hooks/useUserMedia'
 import AppContext from '../store/app-context'
+import ErrorPage from './ErrorPage'
 import Loader from './Loader'
 import PreviewProduct from './PreviewProduct'
 import {
@@ -49,6 +50,8 @@ export default function Camera() {
   const [isLoading, setIsLoading] = useState(false)
   const [isShowCamera, setIsShowCamera] = useState(true)
   const [isShowPreviewProduct, setIsShowPreviewProduct] = useState(false)
+  const [isShowError, setIsShowError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const unique_id = uuid()
   const small_id = unique_id.slice(0, 5)
@@ -85,34 +88,36 @@ export default function Camera() {
     // const upload_url_test = 'https://klishevich.com'
     // const upload_url_test = 'http://localhost:5000'
     const upload_url = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/images'
-    const getDataUrl = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/products?imageId='
+    // const getDataUrl = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/products?imageId='
     const formData = new FormData()
     formData.append('file', file)
     formData.append('fileName', file.name)
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    }
     try {
-      const delay = (time: number) => new Promise((resolve, reject) => setTimeout(resolve, time))
       // to google_api
-      const response = await axios.post<any>(`${upload_url}`, formData, config)
-      const { imageId } = response.data
-      console.log('IMAGE_ID', response.data.imageId)
-      await delay(7000)
-      const product = await axios.get<any>(`${getDataUrl}${imageId}`)
-      console.log('PRODUCT: ', product)
+      const product = await axios.post<any>(`${upload_url}`, formData, { timeout: 15000 })
+      console.log('Product:', product)
+      console.log('Response:', product.data)
 
-      //to my_test_api
-      // const response = await axios.post<string>(`${upload_url_test}/upload`, formData, config)
-      // await delay(3000)
-      // const product = await axios.post(`${upload_url_test}/find`, response)
-      appCtx.addProduct(product.data)
-      setIsShowPreviewProduct(true)
-      setIsLoading(false)
+      if (product.data.id) {
+        appCtx.addProduct(product.data)
+        setIsShowPreviewProduct(true)
+        setIsLoading(false)
+      } else if (product.data.article) {
+        setErrorMessage(
+          `Продукт успешно распознан, артикул ${product.data.article}, однако к сожалению на настоящий момент в базе отсутствует. Попробуйте другой продукт.`
+        )
+        setIsShowError(true)
+        setIsLoading(false)
+      } else if (!product.data) {
+        setErrorMessage('Продукт не распознан, попробуйте сделать фото еще раз')
+        setIsShowError(true)
+        setIsLoading(false)
+      }
     } catch (error) {
-      throw new Error('Something went wrong')
+      setErrorMessage('Что-то пошло не так. Попробуйте позднее.')
+      setIsShowError(true)
+      setIsLoading(false)
+      console.log(error)
     }
   }
 
@@ -145,6 +150,12 @@ export default function Camera() {
 
   return (
     <div>
+      {/* <FileUploadSingle
+        setIsShowPreviewProduct={setIsShowPreviewProduct}
+        setIsLoading={setIsLoading}
+        setIsShowError={setIsShowError}
+        setErrorMessage={setErrorMessage}
+      /> */}
       {isShowCamera && (
         <div style={{ display: 'flex', height: '100%' }}>
           <Measure bounds onResize={handleResize}>
@@ -207,6 +218,7 @@ export default function Camera() {
       )}
       {isLoading && <Loader />}
       {isShowPreviewProduct && !isLoading && <PreviewProduct setIsShowPreviewProduct={setIsShowPreviewProduct} />}
+      {isShowError && !isLoading && <ErrorPage setIsShowError={setIsShowError} message={errorMessage} />}
     </div>
   )
 }
