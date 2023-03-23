@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ReactComponent as CancelSvg } from '../assets/cancelRed.svg'
 import { Button } from '../components/ui/Button'
@@ -16,22 +16,27 @@ export default function PreviewProduct({ setIsShowPreviewProduct }: TProps) {
   const navigate = useNavigate()
   const product = appCtx.currentProduct as IProduct
 
-  const navigateHandler = () => {
-    navigate('/cart')
-  }
+  const [isVisible, setIsVisible] = useState(true)
 
   const handleCancel = () => {
-    setIsShowPreviewProduct(false)
-    navigate('/cart')
+    setIsVisible(false)
+    setTimeout(() => {
+      setIsShowPreviewProduct(false)
+    }, 300)
+    // navigate('/cart')
   }
 
   const cartItemAddhandler = (item: IProduct) => {
+    setIsVisible(false)
     appCtx.addItemToCart(item)
-    navigate('/cart')
+    setTimeout(() => {
+      setIsShowPreviewProduct(false)
+      navigate('/cart')
+    }, 300)
   }
 
   return (
-    <div className={classes.container}>
+    <div className={isVisible ? `${classes.container}` : `${classes.container} ${classes.down}`}>
       <div className={classes.title}>{product.title}</div>
       <div className={classes.title__second}>
         <div>{`Артикул: ${product.article}`}</div>
@@ -42,7 +47,7 @@ export default function PreviewProduct({ setIsShowPreviewProduct }: TProps) {
           marginLeft: '10px',
           marginRight: '10px',
           marginTop: '3px',
-          marginBottom: '3px',
+          marginBottom: '3px'
         }}
       />
       <div className={classes.nutrition}>
@@ -64,12 +69,7 @@ export default function PreviewProduct({ setIsShowPreviewProduct }: TProps) {
       <div className={classes.description}>{product.description}</div>
       <div className={classes.action}>
         <div className={classes.action__button}>
-          <Button
-            children={`${product.price} ₸ +`}
-            className='btn__product'
-            typeButton='button'
-            onClick={cartItemAddhandler.bind(null, product)}
-          />
+          <Button children={`${product.price} ₸ +`} className='btn__product' typeButton='button' onClick={cartItemAddhandler.bind(null, product)} />
         </div>
         <div className={classes.action__icon} onClick={handleCancel}>
           <CancelSvg />

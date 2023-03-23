@@ -9,6 +9,7 @@ import { useOffsets } from '../hooks/useOffsets'
 import { useUserMedia } from '../hooks/useUserMedia'
 import AppContext from '../store/app-context'
 import ErrorPage from './ErrorPage'
+import FileUploadSingle from './FileUploadSingle'
 import Loader from './Loader'
 import PreviewProduct from './PreviewProduct'
 import {
@@ -150,12 +151,12 @@ export default function Camera() {
 
   return (
     <div>
-      {/* <FileUploadSingle
+      <FileUploadSingle
         setIsShowPreviewProduct={setIsShowPreviewProduct}
         setIsLoading={setIsLoading}
         setIsShowError={setIsShowError}
         setErrorMessage={setErrorMessage}
-      /> */}
+      />
       {isShowCamera && (
         <div style={{ display: 'flex', height: '100%' }}>
           <Measure bounds onResize={handleResize}>

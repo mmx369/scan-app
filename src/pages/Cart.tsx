@@ -1,26 +1,84 @@
+import axios from 'axios'
 import { motion } from 'framer-motion'
 import { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { v4 as uuid } from 'uuid'
 import { ReactComponent as BottomLineSvg } from '../assets/bottomLine.svg'
 import { ReactComponent as BuySvg } from '../assets/buy.svg'
 import camSvg from '../assets/camera.svg'
 import { ReactComponent as ExitSvg } from '../assets/exit.svg'
 import CartItem from '../components/CartItem'
+import Loader from '../components/Loader'
+import PreviewProduct from '../components/PreviewProduct'
 import ProductDetail from '../components/ProductDetail'
 import { Button } from '../components/ui/Button'
 import AppContext from '../store/app-context'
+import { IProduct } from '../types/Product'
 
+import ErrorPage from '../components/ErrorPage'
 import classes from './Cart.module.css'
 
 export default function Cart() {
   const cartCtx = useContext(AppContext)
+  const appCtx = useContext(AppContext)
   const navigate = useNavigate()
   const [isShowProduct, setIsShowProduct] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [productId, setProductId] = useState('')
+  const [isShowPreviewProduct, setIsShowPreviewProduct] = useState(false)
+  const [isShowError, setIsShowError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  console.log('SHOWPreview', isShowPreviewProduct)
+
+  const unique_id = uuid()
 
   const openDetailHandler = (id: string) => {
     setProductId(id)
     setIsShowProduct(true)
+  }
+
+  const upload_url = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/images'
+  // const upload_url_test = 'http://192.168.1.105:5000/images'
+  // const upload_url_test = 'https://klishevich.com/images'
+
+  const fileHandler = async (e: any) => {
+    if (!e.target.files) {
+      return
+    }
+    setIsLoading(true)
+    const small_id = unique_id.slice(0, 5)
+    const newFile = e.target.files[0]
+    const formData = new FormData()
+    formData.append('file', newFile, `${small_id}.jpg`)
+    try {
+      const product = await axios.post<IProduct>(`${upload_url}`, formData, { timeout: 15000 })
+      console.log('Product:', product)
+      console.log('Response:', product.data)
+
+      if (product.data.id) {
+        appCtx.addProduct(product.data)
+        setIsShowPreviewProduct(true)
+        setIsLoading(false)
+      } else if (product.data.article) {
+        setErrorMessage(
+          `Продукт успешно распознан, артикул ${product.data.article}, однако к сожалению на настоящий момент в базе отсутствует. Попробуйте другой продукт.`
+        )
+        setIsShowError(true)
+        setIsLoading(false)
+      } else if (!product.data) {
+        setErrorMessage('Продукт не распознан, попробуйте сделать фото еще раз')
+        setIsShowError(true)
+        setIsLoading(false)
+      }
+
+      setIsLoading(false)
+    } catch (error: unknown) {
+      setErrorMessage('Что-то пошло не так. Попробуйте позднее.')
+      setIsShowError(true)
+      setIsLoading(false)
+      console.log(error)
+    }
   }
 
   const cartItems = (
@@ -90,8 +148,19 @@ export default function Cart() {
           </div>
           <div className={classes.footer}>
             <div className={classes.footer__button}>
-              <Button icon={camSvg} children='Сканировать' typeButton='button' className='btn__plus_scan' onClick={() => navigate('/scanning')} />
+              <input
+                type='file'
+                id='upload'
+                onChange={fileHandler}
+                accept='image/*'
+                capture='environment'
+                style={{ display: 'none', opacity: 0, zIndex: -1 }}
+              />
+              <label htmlFor='upload' className={classes.inputLabel}>
+                Сканировать &nbsp; <img src={camSvg} width={25} alt='' />
+              </label>
             </div>
+            {/* <Button icon={camSvg} children='Сканировать' typeButton='button' className='btn__plus_scan' onClick={() => navigate('/scanning')} /> */}
             <div className={classes.footer_img}>
               <BottomLineSvg />
             </div>
@@ -107,7 +176,19 @@ export default function Cart() {
                 <Button children='Перейти к оплате' className='btn__product' typeButton='button' onClick={() => navigate('/checkout')} />
               </div>
               <div className={classes.action__button_2}>
-                <Button children='+' icon={camSvg} typeButton='button' className='btn__plus_scan_sm' onClick={() => navigate('/scanning')} />
+                <input
+                  type='file'
+                  id='upload'
+                  onChange={fileHandler}
+                  accept='image/*'
+                  capture='environment'
+                  style={{ display: 'none', opacity: 0, zIndex: -1 }}
+                />
+                <label htmlFor='upload' className={classes.inputLabel} style={{ height: '54px' }}>
+                  + &nbsp; <img src={camSvg} width={25} alt='' />
+                </label>
+
+                {/* <Button children='+' icon={camSvg} typeButton='button' className='btn__plus_scan_sm' onClick={() => navigate('/scanning')} /> */}
               </div>
             </div>
             <div className={classes.footer_img}>
@@ -116,8 +197,10 @@ export default function Cart() {
           </div>
         </>
       )}
-
+      {isLoading && <Loader />}
+      {isShowPreviewProduct && !isLoading && <PreviewProduct setIsShowPreviewProduct={setIsShowPreviewProduct} />}
       {isShowProduct && <ProductDetail productId={productId} setIsShowProduct={setIsShowProduct} />}
+      {isShowError && !isLoading && <ErrorPage setIsShowError={setIsShowError} message={errorMessage} />}
     </motion.div>
   )
 }
