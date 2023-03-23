@@ -27,7 +27,8 @@ export default function Cart() {
     setIsShowProduct(true)
   }
 
-  const upload_url_test = 'http://localhost:5000/images'
+  // const upload_url_test = 'http://localhost:5000/images'
+  const upload_url_test = 'https://klishevich.com/images'
 
   const fileHandler = async (e: any) => {
     console.log(111, e.target.files)
