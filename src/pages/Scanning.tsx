@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import Camera from '../components/Camera'
+import PhotoCamera from '../components/PhotoCamera'
 import classes from './Scanning.module.css'
 
 export default function Scanning() {
@@ -11,7 +11,8 @@ export default function Scanning() {
       initial={{ x: '100%' }}
       transition={{ duration: 0.75, ease: 'easeOut' }}
     >
-      <Camera />
+      {/* <Camera /> */}
+      <PhotoCamera />
     </motion.div>
   )
 }

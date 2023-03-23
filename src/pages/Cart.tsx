@@ -1,6 +1,8 @@
+import axios from 'axios'
 import { motion } from 'framer-motion'
 import { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { v4 as uuid } from 'uuid'
 import { ReactComponent as BottomLineSvg } from '../assets/bottomLine.svg'
 import { ReactComponent as BuySvg } from '../assets/buy.svg'
 import camSvg from '../assets/camera.svg'
@@ -9,6 +11,7 @@ import CartItem from '../components/CartItem'
 import ProductDetail from '../components/ProductDetail'
 import { Button } from '../components/ui/Button'
 import AppContext from '../store/app-context'
+import { IProduct } from '../types/Product'
 
 import classes from './Cart.module.css'
 
@@ -17,10 +20,39 @@ export default function Cart() {
   const navigate = useNavigate()
   const [isShowProduct, setIsShowProduct] = useState(false)
   const [productId, setProductId] = useState('')
+  const unique_id = uuid()
 
   const openDetailHandler = (id: string) => {
     setProductId(id)
     setIsShowProduct(true)
+  }
+
+  const upload_url_test = 'http://localhost:5000/images'
+
+  const fileHandler = async (e: any) => {
+    console.log(111, e.target.files)
+    alert(e.target.files)
+    if (!e.target.files) {
+      return
+    }
+    const small_id = unique_id.slice(0, 5)
+    // alert(small_id)
+    const newFile = e.target.files[0]
+    console.log(111099, newFile)
+    alert(newFile)
+    const formData = new FormData()
+    formData.append('file', newFile, `${small_id}.jpg`)
+    console.log('FormData', formData)
+    alert(formData)
+    try {
+      alert('TRY')
+      const product = await axios.post<Promise<IProduct>>(`${upload_url_test}`, formData, { timeout: 15000 })
+      // alert(product.data)
+      console.log('Product:', product)
+      console.log('Response:', product.data)
+    } catch (error: unknown) {
+      alert((error as Error)?.stack)
+    }
   }
 
   const cartItems = (
@@ -90,8 +122,12 @@ export default function Cart() {
           </div>
           <div className={classes.footer}>
             <div className={classes.footer__button}>
-              <Button icon={camSvg} children='Сканировать' typeButton='button' className='btn__plus_scan' onClick={() => navigate('/scanning')} />
+              <input type='file' id='upload' onChange={fileHandler} accept='image/*' capture='environment' style={{ opacity: 0, zIndex: -1 }} />
+              <label htmlFor='upload' className={classes.inputLabel}>
+                Сканировать &nbsp; <img src={camSvg} width={25} alt='' />
+              </label>
             </div>
+            {/* <Button icon={camSvg} children='Сканировать' typeButton='button' className='btn__plus_scan' onClick={() => navigate('/scanning')} /> */}
             <div className={classes.footer_img}>
               <BottomLineSvg />
             </div>

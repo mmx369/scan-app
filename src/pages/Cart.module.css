@@ -176,6 +176,23 @@
   height: 30px;
 }
 
+.inputLabel {
+  margin: auto;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: #1c1c1e;
+  color: white;
+  height: 38px;
+  width: 90%;
+  font-size: 16px;
+  font-weight: 500;
+  outline: transparent;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
 @keyframes slide-slow {
   0% {
     transform: translateX(-100%);
