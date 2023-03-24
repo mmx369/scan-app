@@ -40,7 +40,6 @@ export default function Cart() {
 
   const upload_url = 'https://qbuy-api-gqzhjffxga-lm.a.run.app/images'
   // const upload_url_test = 'http://192.168.1.105:5000/images'
-  // const upload_url_test = 'https://klishevich.com/images'
 
   const fileHandler = async (e: any) => {
     if (!e.target.files) {
@@ -66,13 +65,15 @@ export default function Cart() {
         )
         setIsShowError(true)
         setIsLoading(false)
-      } else if (!product.data) {
-        setErrorMessage('Продукт не распознан, попробуйте сделать фото еще раз')
+      } else if (product.data.title) {
+        setErrorMessage(`Продукт ${product.data.title} не распознан, попробуйте сделать фото еще раз`)
+        setIsShowError(true)
+        setIsLoading(false)
+      } else if (!product.data || !product.data.title || !product.data.article) {
+        setErrorMessage(`Продукт не распознан, попробуйте сделать фото еще раз`)
         setIsShowError(true)
         setIsLoading(false)
       }
-
-      setIsLoading(false)
     } catch (error: unknown) {
       setErrorMessage('Что-то пошло не так. Попробуйте позднее.')
       setIsShowError(true)
