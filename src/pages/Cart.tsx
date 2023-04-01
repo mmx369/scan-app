@@ -29,8 +29,6 @@ export default function Cart() {
   const [isShowError, setIsShowError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
-  console.log('SHOWPreview', isShowPreviewProduct)
-
   const unique_id = uuid()
 
   const openDetailHandler = (id: string) => {

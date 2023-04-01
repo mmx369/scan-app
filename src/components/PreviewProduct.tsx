@@ -40,7 +40,7 @@ export default function PreviewProduct({ setIsShowPreviewProduct }: TProps) {
       <div className={classes.title}>{product.title}</div>
       <div className={classes.title__second}>
         <div>{`Артикул: ${product.article}`}</div>
-        <div>{`Масса: ${product.weight} гр.`}</div>
+        <div>{`Масса: ${product.weight * 1000} гр.`}</div>
       </div>
       <hr
         style={{

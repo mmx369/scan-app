@@ -23,17 +23,11 @@ export default function ProductDetail({ productId, setIsShowProduct }: TProps) {
   }
 
   return (
-    <div
-      className={
-        isVisible
-          ? `${classes.container}`
-          : `${classes.container} ${classes.down}`
-      }
-    >
+    <div className={isVisible ? `${classes.container}` : `${classes.container} ${classes.down}`}>
       <div className={classes.title}>{product && product.title}</div>
       <div className={classes.title__second}>
         <div>{`Артикул: ${product && product.article}`}</div>
-        <div>{`Масса: ${product && product.weight} гр.`}</div>
+        <div>{`Масса: ${product && product.weight * 1000} гр.`}</div>
       </div>
       <hr style={{ marginLeft: '15px', marginRight: '15px' }} />
       <div className={classes.nutrition}>
@@ -49,21 +43,13 @@ export default function ProductDetail({ productId, setIsShowProduct }: TProps) {
           <strong>{product && product.fats}</strong> <div>Жиры</div>
         </div>
         <div className={classes.nutrition__block}>
-          <strong>{product && product.carbohydrates}</strong>{' '}
-          <div>Углеводы</div>
+          <strong>{product && product.carbohydrates}</strong> <div>Углеводы</div>
         </div>
       </div>
-      <div className={classes.description}>
-        {product && product.description}
-      </div>
+      <div className={classes.description}>{product && product.description}</div>
       <div className={classes.action}>
         <div className={classes.action__button}>
-          <Button
-            children='Удалить из корзины'
-            typeButton='button'
-            className='btn__delete'
-            onClick={cartItemRemoveHandler.bind(null, productId!)}
-          />
+          <Button children='Удалить из корзины' typeButton='button' className='btn__delete' onClick={cartItemRemoveHandler.bind(null, productId!)} />
         </div>
       </div>
     </div>
