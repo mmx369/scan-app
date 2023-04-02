@@ -27,7 +27,7 @@ export default function ProductDetail({ productId, setIsShowProduct }: TProps) {
       <div className={classes.title}>{product && product.title}</div>
       <div className={classes.title__second}>
         <div>{`Артикул: ${product && product.article}`}</div>
-        <div>{`Масса: ${product && product.weight * 1000} гр.`}</div>
+        <div>{`Масса: ${product && product.weight} гр.`}</div>
       </div>
       <hr style={{ marginLeft: '15px', marginRight: '15px' }} />
       <div className={classes.nutrition}>
